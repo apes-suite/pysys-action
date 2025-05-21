@@ -1,0 +1,32 @@
+name: Run test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test-action:
+    name: Testing the GH action
+    runs-on: ubuntu-latest
+    concurrency:
+      group: testing-${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name:
+        id: test-build-action
+        uses: ./
+        with:
+          testdir: "./"
+          exepath: "tests/bin"
+

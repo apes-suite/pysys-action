@@ -1,0 +1,20 @@
+name: 'Run System tests'
+description: 'Run the pysys.py command in the given directory'
+branding:
+  icon: 'award'
+  color: 'orange'
+inputs:
+  testdir:
+    description: 'Subdirectory within testroot (where pysysproject.xml resides), to run tests in'
+    required: true
+    default: './'
+  exepath:
+    description: 'Path to add to the PATH variable to find executables'
+    required: true
+    default: 'build'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.testdir }}
+    - ${{ inputs.exepath }}
