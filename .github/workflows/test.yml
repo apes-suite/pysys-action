@@ -27,6 +27,6 @@ jobs:
         id: test-build-action
         uses: ./
         with:
-          testdir: "tests/systests"
+          testdir: "./"
           path: "tests/bin"
 
