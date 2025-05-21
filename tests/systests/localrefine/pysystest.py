@@ -27,6 +27,7 @@ class PySysTest(ApesHelper, pysys.basetest.BaseTest):
     def execute(self):
         self.startProcess(
             'dummy_exe',
+            arguments = [],
             environs = os.environ,
             stdouterr = ('dumlog.out', 'dumlog.err') )
         atlrun = self.apes.runAteles(np = 1)
