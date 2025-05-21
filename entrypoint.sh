@@ -12,6 +12,7 @@ echo "Copying project to user workspace"
 mkdir -p /home
 cp -rfL . /home/apes
 chown -R apes /home/apes
+ls -ld $GITHUB_OUTPUT
 projectfile=$(find /home/apes -name pysysproject.xml)
 if [[ "$projectfile" == "" ]]; then
   echo "ERROR! Could not find pysysproject.xml." >> $GITHUB_STEP_SUMMARY

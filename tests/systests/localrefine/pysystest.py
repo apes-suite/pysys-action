@@ -21,7 +21,7 @@ class PySysTest(ApesHelper, pysys.basetest.BaseTest):
     def setup(self):
         self.mkdir('mesh')
         sdrconfig = os.path.join(self.input, 'seeder.lua')
-        self.copy(sdrconfig, os.path.join(self.output, 'seeder.lua')
+        self.copy(sdrconfig, os.path.join(self.output, 'seeder.lua'))
         self.apes.runSeeder()
 
     def execute(self):
