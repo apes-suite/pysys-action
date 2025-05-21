@@ -16,7 +16,7 @@ from pysys.constants import *
 
 trackfile = 'header.info'
 
-from apes.apeshelper import ApesHelper
+from apes.apeshelper import ApesHelper, findTool
 class PySysTest(ApesHelper, pysys.basetest.BaseTest):
     def setup(self):
         self.mkdir('mesh')
@@ -27,12 +27,13 @@ class PySysTest(ApesHelper, pysys.basetest.BaseTest):
     def execute(self):
         print(f'PATH={os.environ["PATH"]}')
         self.startProcess(
-            'dummy_exe',
+            findTool('dummy_exe'),
             arguments = [],
             environs = os.environ,
             stdouterr = ('dumlog.out', 'dumlog.err') )
         atlrun = self.apes.runAteles(np = 1)
 
     def validate(self):
+        self.assertPathExists('mesh/header.lua', abortOnError = True)
         self.assertPathExists(trackfile, abortOnError = True)
 
