@@ -31,7 +31,6 @@ class PySysTest(ApesHelper, pysys.basetest.BaseTest):
             arguments = [],
             environs = os.environ,
             stdouterr = ('dumlog.out', 'dumlog.err') )
-        atlrun = self.apes.runAteles(np = 1)
 
     def validate(self):
         self.assertPathExists('mesh/header.lua', abortOnError = True)
