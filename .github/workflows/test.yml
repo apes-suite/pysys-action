@@ -28,5 +28,5 @@ jobs:
         uses: ./
         with:
           testdir: "./"
-          path: "tests/bin"
+          exepath: "tests/bin"
 
