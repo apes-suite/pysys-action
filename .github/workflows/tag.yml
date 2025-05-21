@@ -1,0 +1,56 @@
+name: Bump version
+# Increment version on merge to master from pull request
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+concurrency:
+  group: tagging
+  
+jobs:
+  autotag:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      new-tag: ${{ startsWith(steps.tagbump.outputs.new-tag, 'v') && steps.tagbump.outputs.new-tag || format('v{0}', steps.tagbump.outputs.new-tag) }}
+      otag: ${{ steps.tagbump.outputs.tag }}
+    strategy:
+      matrix:
+        node-version:
+          - 12
+    steps:
+      - name: Bump version and push tag
+        id: tagbump
+        uses: phish108/autotag-action@v1.1.64
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          with-v: true
+
+  movetags:
+    needs: autotag
+    if: ${{ needs.autotag.outputs.new-tag != needs.autotag.outputs.otag }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+      - name: Get semvers and update MAJOR and MINOR tags
+        run: |
+          echo "old tag: ${{ needs.autotag.outputs.otag }}"
+          FULL=${{ needs.autotag.outputs.new-tag }}
+          MINOR=${FULL%.*}
+          MAJOR=${MINOR%%.*}
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -fa "${MAJOR}" -m 'Major release'
+          git push origin "${MAJOR}" --force
+          git tag -fa "${MINOR}" -m 'Minor release'
+          git push origin "${MINOR}" --force
