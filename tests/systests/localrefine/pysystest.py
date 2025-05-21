@@ -25,6 +25,7 @@ class PySysTest(ApesHelper, pysys.basetest.BaseTest):
         self.apes.runSeeder()
 
     def execute(self):
+        print(f'PATH={os.environ["PATH"]}')
         self.startProcess(
             'dummy_exe',
             arguments = [],
