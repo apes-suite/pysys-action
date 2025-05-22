@@ -9,10 +9,10 @@ echo "::endgroup::"
 echo "::group::SysTest-Preparation"
 export PATH=$PWD/$2:$PATH
 echo "Copying project to user workspace"
-mkdir -p /home
-cp -rfL . /home/apes
-chown -R apes /home/apes
-projectfile=$(find /home/apes -name pysysproject.xml)
+GHUSER=$(ls -ld . | awk 'NR==1 {print $3}')
+GHGROUP=$(ls -ld . | awk 'NR==1 {print $4}')
+chown -R apes .
+projectfile=$(find . -name pysysproject.xml -print | head -n 1)
 if [[ "$projectfile" == "" ]]; then
   echo "ERROR! Could not find pysysproject.xml." >> $GITHUB_STEP_SUMMARY
   exit 1;
@@ -33,7 +33,7 @@ echo "::endgroup::"
 echo "::group::Test-Finalization"
 chown -R $OUSER:$OGROUP $GITHUB_OUTPUT
 cd $ORIGIN
-cp -rfL /home/apes $ORIGIN
+chown -R $GHUSER:$GHGROUP $ORIGIN
 if [[ $SUCCESS ]]; then
   echo "Passed system tests in \`$1\`" >> $GITHUB_STEP_SUMMARY
 else
