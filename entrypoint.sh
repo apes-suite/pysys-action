@@ -19,6 +19,7 @@ if [[ "$projectfile" == "" ]]; then
 fi
 testroot=$(dirname $projectfile)
 ORIGIN=$PWD
+echo "Changing to directory $testroot/$1"
 cd $testroot/$1
 OUSER=$(ls -ld $GITHUB_OUTPUT | awk 'NR==1 {print $3}')
 OGROUP=$(ls -ld $GITHUB_OUTPUT | awk 'NR==1 {print $4}')
