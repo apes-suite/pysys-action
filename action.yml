@@ -12,6 +12,9 @@ inputs:
     description: 'Path to add to the PATH variable to find executables'
     required: true
     default: 'build'
+outputs:
+  testrundir:
+    description: "Subdirectory in which the tests were executed."
 runs:
   using: 'docker'
   image: 'Dockerfile'
