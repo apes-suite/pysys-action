@@ -34,6 +34,7 @@ echo "::group::Test-Finalization"
 chown -R $OUSER:$OGROUP $GITHUB_OUTPUT
 cd $ORIGIN
 chown -R $GHUSER:$GHGROUP $ORIGIN
+echo "testrundir=$testroot/$1" >> $GITHUB_OUTPUT
 if [[ $SUCCESS ]]; then
   echo "Passed system tests in \`$1\`" >> $GITHUB_STEP_SUMMARY
 else
