@@ -17,3 +17,9 @@ The resulting test reports are put into a `CItests` directory.
 **Required** A path to add to the `$PATH` environment variable to
 look for executables. This path is relative to the github workspace,
 prepended to `$PATH` and defaults to `build`.
+
+## Outputs
+
+### `testrundir`
+
+Directory in which the pysys tests actually were executed.
