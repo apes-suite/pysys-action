@@ -14,7 +14,7 @@ inputs:
     default: 'build'
 outputs:
   testrundir:
-    description: "Subdirectory in which the tests were executed."
+    description: "Subdirectory in which the tests were executed (relative path inside workspace)."
 runs:
   using: 'docker'
   image: 'Dockerfile'
