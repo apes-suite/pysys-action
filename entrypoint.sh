@@ -21,6 +21,7 @@ testroot=$(dirname $projectfile)
 ORIGIN=$PWD
 echo "Changing to directory $testroot/$1"
 cd $testroot/$1
+RUNDIR=$PWD
 OUSER=$(ls -ld $GITHUB_OUTPUT | awk 'NR==1 {print $3}')
 OGROUP=$(ls -ld $GITHUB_OUTPUT | awk 'NR==1 {print $4}')
 chown -R apes $GITHUB_OUTPUT
@@ -34,7 +35,7 @@ echo "::group::Test-Finalization"
 chown -R $OUSER:$OGROUP $GITHUB_OUTPUT
 cd $ORIGIN
 chown -R $GHUSER:$GHGROUP $ORIGIN
-echo "testrundir=$testroot/$1" >> $GITHUB_OUTPUT
+echo "testrundir=${RUNDIR#$ORIGIN/}" >> $GITHUB_OUTPUT
 if [[ $SUCCESS ]]; then
   echo "Passed system tests in \`$1\`" >> $GITHUB_STEP_SUMMARY
 else
