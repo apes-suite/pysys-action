@@ -22,4 +22,5 @@ prepended to `$PATH` and defaults to `build`.
 
 ### `testrundir`
 
-Directory in which the pysys tests actually were executed.
+Path to the directory in which the pysys tests actually were executed
+relative to the workspace directory.
